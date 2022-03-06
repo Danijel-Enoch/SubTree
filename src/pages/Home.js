@@ -1,5 +1,6 @@
 import React from 'react'
 import AddPlanController from '../components/AddPlanController'
+import CreatePlan from '../components/CreatePlan'
 export const Home = () => {
   
 
@@ -15,6 +16,7 @@ export const Home = () => {
        
        <div>
         <AddPlanController/>
+  
        </div>
 
        </>

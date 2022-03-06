@@ -7,6 +7,8 @@ import {
   Route,
 } from "react-router-dom";
 import CreatePlan from './components/CreatePlan';
+import CreateSpecialPlan from './components/CreateSpecialPlan';
+import GetPlanDetails from './components/GetPlanDetails';
 
 
 function App() {
@@ -17,7 +19,9 @@ function App() {
     <Routes>
       <Route path={"/about"} element={<Home/>}/>
       <Route path={"/"} element={<Register/>}/>
-      <Route path={"/creaete-plan"} element={<CreatePlan/>}/>
+      <Route path={"/create-plan"} element={<CreatePlan/>}/>
+      <Route path={"/create-special-plan"} element={<CreateSpecialPlan/>}/>
+      <Route path={"/get-plan-details"} element={<GetPlanDetails/>}/>
     </Routes>
     
     </BrowserRouter>
