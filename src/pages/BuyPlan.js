@@ -28,6 +28,7 @@ export default function BuyPlan() {
     await window.ethereum.request({method:'eth_requestAccounts'});
   }
   async function getPlanDetail(){
+      
  if (typeof window.ethereum !== 'undefined'){
     await reqAcct()
  const provider = new ethers.providers.Web3Provider(window.ethereum)
