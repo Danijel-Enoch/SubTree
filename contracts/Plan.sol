@@ -72,6 +72,11 @@ contract Plan{
     _;
   }
 
+  function withdrawMoney() public onlyPlanController {
+    address payable to = payable(msg.sender);
+    to.transfer(address(this).balance);
+  }
+
   // cannot be edited later because plan starts immediately after plan is created
   function createPlan(string calldata _planName, uint _planCost, uint _planDuration) public onlyPlanController { 
     require(bytes(_planName).length != 0, "planName cannot be empty");
@@ -126,11 +131,11 @@ contract Plan{
     emit editPlanEvent(_planId, _planName, _planCost, _planStart, _planDuration, _planEnd);
   }
 
-  function getPlanDetails(uint _planId) public view returns (planDetails memory) {
+  function getPlanDetails(uint _planId) public view returns (planDetails memory ) {
     return plans[_planId];
   }
 
-  function ticketContract(address _ticketContractAddr) public {
+  function ticketContract(address _ticketContractAddr) onlyPlanController public {
     ticketContractAddr = _ticketContractAddr;
   }
 

@@ -1,15 +1,15 @@
 import React from 'react'
 import { useState,useRef } from 'react'
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
+import Plan from './../artifacts/contracts/Plan.sol/Plan.json'
 
 export default function GetPlanDetails() {
     const [planId,setPlanId]=useState("");
     
 
- const contract_address_plan="0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
+ const contract_address_plan="0x0B306BF915C4d645ff596e518fAf3F9669b97016";
  const ticket_abi=[
-     "event createPlanEvent(uint indexed _planId, string _planName, uint _planCost, uint _planDuration);",
-     "function plans() public view returns(uint256 planId,string planName,uint256 planCost,uint256 planStart, uint256 planDuration,uint256 planEnd,bool planValidity,uint256 planSubscribers)"
+     "function getPlanDetails(uint _planId) public view returns (planDetails memory )",
  ];
 
  async function reqAcct(){
@@ -21,12 +21,28 @@ export default function GetPlanDetails() {
  const provider = new ethers.providers.Web3Provider(window.ethereum)
  const signer = provider.getSigner()
  const myAddress = await signer.getAddress()
- const contract= new ethers.Contract(contract_address_plan,ticket_abi,signer);
- const data=await contract.plans();
- await data.wait()
+ const contract= new ethers.Contract(contract_address_plan,Plan.abi,provider);
+ const data=await contract.getPlanDetails(1);
+// await data.wait()
 //  await myAddress.wait();
  //console.log(myAddress)
- console.log(planId)
+ console.log(data)
+ //console.log(data[2]._hex)
+ data.forEach((element,id) => {
+    // console.log(typeof element)
+     if(typeof element==="object"){
+        console.log(BigNumber.from(data[id]._hex).toNumber())
+     }
+     if(typeof element==="boolean"){
+        console.log(data[id])
+     }
+     if(typeof element==="string"){
+        console.log(data[id])
+     }
+ });
+ BigNumber.from("0x2a");
+//console.log(BigNumber.from(data[]._hex).toNumber())
+
 
  }
 
@@ -53,6 +69,17 @@ export default function GetPlanDetails() {
         <button onClick={getPlanDetail} className='bg-black text-white p-5 shadow-lg mb-10  mx-20  w-30 rounded'>
             Get Plan details
         </button>
+
+        <div className='flex flex-col gap-3 '>
+     planId:
+    planName:
+    planCost:
+   planStart:
+     planDuration:
+     planEnd:
+     planValidity:
+     planSubscribers:
+        </div>
 
     </div>
   )
